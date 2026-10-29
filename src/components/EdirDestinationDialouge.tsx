@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 
 import { Pencil } from "lucide-react";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 type DestinationFormData = {
   destinationName: string;
@@ -119,14 +120,16 @@ const EditDestinationDialogue = ({
     if (Object.keys(nextErrors).length > 0) return;
 
     setIsSubmitting(true);
+    const token = await getTokenFromClient()
 
     try {
       const res = await fetch(
-        `http://localhost:8000/destination/${destination._id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/destination/${destination._id}`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${token}`
           },
           body: JSON.stringify({
             ...formData,

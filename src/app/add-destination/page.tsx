@@ -14,6 +14,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
+
 export default function AddDestinationPage() {
   const [formData, setFormData] = useState({
     destinationName: "",
@@ -36,15 +38,19 @@ export default function AddDestinationPage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const res = await fetch('http://localhost:8000/add-destination', {
+    const token = await getTokenFromClient()
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}http://localhost:8000/add-destination`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+
         },
         body: JSON.stringify(formData)
     });
-    const data = await res.json()
-    console.log(data)
+    const result = await res.json()
+    console.log(result)
 
     const nextErrors: Record<string, string> = {};
     if (!formData.destinationName.trim()) nextErrors.destinationName = "Destination name is required.";

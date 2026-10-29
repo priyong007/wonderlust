@@ -29,7 +29,7 @@ export default function AddDestinationPage() {
   useEffect(() => {
     const fetchDestinations = async () => {
       try {
-        const res = await fetch("http://localhost:8000/destination");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination`);
 
         if (!res.ok) {
           throw new Error("Failed to fetch destinations.");

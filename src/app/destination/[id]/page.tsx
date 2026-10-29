@@ -6,6 +6,8 @@ import DeleteDestinationDialouge from '@/components/DeleteDestination';
 
 import BookingCard from '@/components/booking/BookingCard';
 
+import { getTokenFromServer } from '@/lib/getTokenFromServer';
+
 const DestinationDetailsPage = async ({
   params,
 }: {
@@ -13,11 +15,20 @@ const DestinationDetailsPage = async ({
 }) => {
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:8000/destination/${id}`);
+  const token = await getTokenFromServer()
+  
 
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/${id}`,{
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    
+  });
+  console.log(res)
   if (!res.ok) {
     throw new Error('Failed to fetch destination');
   }
+
 
   const data = await res.json();
   const destination = data.result;

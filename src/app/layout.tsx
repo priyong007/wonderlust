@@ -3,6 +3,7 @@ import { Josefin_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { ToastContainer } from "react-toastify";
+import Footer from "@/components/footer";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         {children}
         <ToastContainer />
+        <Footer/>
         </body>
     </html>
   );

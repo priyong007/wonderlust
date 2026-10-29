@@ -10,6 +10,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import { Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -20,9 +21,17 @@ type DeleteDestinationDialogueProps = {
 const DeleteDestinationDialouge = ({
   id,
 }: DeleteDestinationDialogueProps) => {
+
+   
     const handleDeleteDestination = async() => {
-        const res = await fetch(`http://localhost:8000/destination/${id}`,{
+
+      const token = await getTokenFromClient();
+      
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/destination/${id}`,{
             method: 'DELETE',
+            headers: {
+              authorization: `Bearer ${token}`
+            }
         })
         
          if (!res.ok) {

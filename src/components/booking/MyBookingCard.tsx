@@ -22,7 +22,7 @@ const MyBookingCard = ({ booking }: MyBookingCardProps) => {
  console.log(booking)
 
  const handleCancleBooking = async() => {
-    const res = await fetch(`http://localhost:8000/my-booking/${booking._id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-booking/${booking._id}`, {
         method:'DELETE'
     })
     const data = await res.json() 

@@ -25,7 +25,7 @@ const MyBookingPage = async() => {
     const session = await auth.api.getSession({ headers: await headers() });
   const user = session?.user;
   
-  const res = await fetch(`http://localhost:8000/my-booking/${user?.email}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-booking/${user?.email}`);
   const bookings : Booking[] = await res.json();
   console.log(bookings)
     return (
